@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import os.path
 import numpy as np
 import torch
 from torch import nn
@@ -30,11 +31,12 @@ def test_model(model, dataset, batch_size=100):
     :param batch_size: batch size to use for evaluation
     :return: None
     """
-    rng = np.random.RandomState(0)
+    rng = np.random.RandomState(1)
 
     device = 'cuda:0' if torch.cuda.is_available() else 'cpu'
+    basedir = os.path.dirname(os.path.abspath(__file__))
     classifier = Net()
-    classifier.load_state_dict(torch.load('mnist_cnn.pt', map_location=device))
+    classifier.load_state_dict(torch.load(os.path.join(basedir, 'mnist_cnn.pt'), map_location=device))
     classifier.to(device)
     classifier.eval()
 

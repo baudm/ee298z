@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import os.path
 import numpy as np
 try:
     import keras
@@ -35,9 +36,10 @@ def test_model(model, x_test, y_test, batch_size=100):
     :param batch_size: batch size to use for evaluation
     :return: None
     """
-    rng = np.random.RandomState(0)
+    rng = np.random.RandomState(1)
 
-    classifier.load_weights('mnist_cnn.h5')
+    basedir = os.path.dirname(os.path.abspath(__file__))
+    classifier.load_weights(os.path.join(basedir, 'mnist_cnn.h5'))
 
     baseline_score = 0
     correct_score = 0
